@@ -1,3 +1,4 @@
+const { raw } = require("express")
 
 
 const getAllTasks = (req,res) =>{
@@ -5,12 +6,11 @@ const getAllTasks = (req,res) =>{
 }
 
 const createTask = (req,res) =>{
-    res.send('create item')
+    res.json(req.body)
 
 }
 const getTask = (req,res) =>{
-    res.send('get single item')
-
+    res.json({id:req.params.id})
 }
 const updateTask = (req,res) =>{
     res.send('update item')
