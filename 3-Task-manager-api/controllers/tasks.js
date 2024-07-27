@@ -21,11 +21,11 @@ const createTask = async (req,res) =>{
 const getTask = async (req,res) =>{
     try {
         const { id: taskID } = req.params
-        const singleTask = await Task.findOne({ _id: taskID })
-        if(!singleTask) {
+        const task = await Task.findOne({ _id: taskID })
+        if(!task) {
             return res.status(404).json({ msg: 'Task not found' })
         }
-        res.status(200).json({singleTask})
+        res.status(200).json({task})
         
     } catch (error) {
         res.status(500).json({msg:error})

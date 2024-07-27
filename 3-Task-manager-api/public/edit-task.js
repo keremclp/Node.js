@@ -28,40 +28,40 @@ const showTask = async () => {
 
 showTask()
 
-editFormDOM.addEventListener('submit', async (e) => {
-  editBtnDOM.textContent = 'Loading...'
-  e.preventDefault()
+editFormDOM.addEventListener("submit", async (e) => {
+  editBtnDOM.textContent = "Loading...";
+  e.preventDefault();
   try {
-    const taskName = taskNameDOM.value
-    const taskCompleted = taskCompletedDOM.checked
+    const taskName = taskNameDOM.value;
+    const taskCompleted = taskCompletedDOM.checked;
 
-    const {
-      data: { task },
-    } = await axios.patch(`/api/v1/tasks/${id}`, {
+    const response = await axios.patch(`/api/v1/tasks/${id}`, {
       name: taskName,
       completed: taskCompleted,
-    })
+    });
 
-    const { _id: taskID, completed, name } = task
+    // Adjusted to match the response structure
+    const task = response.data.task;
+    const { _id: taskID, completed, name } = task;
 
-    taskIDDOM.textContent = taskID
-    taskNameDOM.value = name
-    tempName = name
-    if (completed) {
-      taskCompletedDOM.checked = true
-    }
-    formAlertDOM.style.display = 'block'
-    formAlertDOM.textContent = `success, edited task`
-    formAlertDOM.classList.add('text-success')
+    taskIDDOM.textContent = taskID;
+    taskNameDOM.value = name;
+    tempName = name;
+    taskCompletedDOM.checked = completed;
+
+    formAlertDOM.style.display = "block";
+    formAlertDOM.textContent = `Success, edited task`;
+    formAlertDOM.classList.add("text-success");
   } catch (error) {
-    console.error(error)
-    taskNameDOM.value = tempName
-    formAlertDOM.style.display = 'block'
-    formAlertDOM.innerHTML = `error, please try again`
+    console.error("Error updating task:", error);
+    taskNameDOM.value = tempName;
+    formAlertDOM.style.display = "block";
+    formAlertDOM.innerHTML = `Error, please try again`;
   }
-  editBtnDOM.textContent = 'Edit'
+  editBtnDOM.textContent = "Edit";
   setTimeout(() => {
-    formAlertDOM.style.display = 'none'
-    formAlertDOM.classList.remove('text-success')
-  }, 3000)
-})
+    formAlertDOM.style.display = "none";
+    formAlertDOM.classList.remove("text-success");
+  }, 3000);
+});
+

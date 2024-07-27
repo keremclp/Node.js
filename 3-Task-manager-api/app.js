@@ -4,12 +4,13 @@ const app = express()
 const tasks = require('./routes/tasks')
 const connectDB = require('./db/connect')
 require('dotenv').config()
+
 // middlewear
+app.use(express.static('./public'))
 app.use(express.json())
 
-app.get('/home', (req,res)=>{
-    res.send('Home page')
-})
+// routes
+
 
 app.use('/api/v1/tasks', tasks)
 
