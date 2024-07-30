@@ -3,8 +3,8 @@ const Product = require('../models/product')
 
 const getAllProductsStatic = async (req,res) => {
     // throw new Error('testing async errors')
-    const products = await Product.find({})
-    .sort('name')
+    const products = await Product.find({ price:{$gt:30} })
+    .sort('price')
     .select('name price')
     
     res.status(200).json({ products, nbHits:products.length })
